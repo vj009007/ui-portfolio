@@ -61,7 +61,6 @@ function validateForm() {
   }
 }
 
-
 // Popup
 var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
@@ -82,57 +81,76 @@ window.onclick = function (event) {
   }
 };*/
 
-  
-  //video Stop
-  var video = $('video')[0];
-  var closeButton = $('.close');
-  closeButton.click(function () {
-    video.pause();
-  });
-  //video Start
-  var video = $('video')[0];
-  var closeButton = $('#myBtn');
-  closeButton.click(function () {
-    video.play();
-  });
+//video Stop
+document.addEventListener("DOMContentLoaded", function () {
+  // Pause Video on Close Button Click
+  const video = document.querySelector("video");
+  const closeButton = document.querySelector(".close");
 
+  if (video && closeButton) {
+    closeButton.addEventListener("click", function () {
+      video.pause();
+    });
+  }
 
-// Form Label
-$(document).ready(function () {
-  $(".form-item").on("click", function () {
-    $(this).addClass("active");
-  });
-  $(".form_input").on("blur", function () {
-    if ($(this).val() === "") {
-      $(this).parent(".form-item").removeClass("active");
-    }
-  });
+  // Play Video on Start Button Click
+  const startButton = document.querySelector("#myBtn");
 
-
-  // Tooltip
-  $(".tooltip").hover(
-    function () {
-      $(this).find(".tooltip-content").fadeIn();
-    },
-    function () {
-      $(this).find(".tooltip-content").hide();
-    }
-  );
-
+  if (video && startButton) {
+    startButton.addEventListener("click", function () {
+      video.play();
+    });
+  }
   // Mobile Nav
-  $(".hamburger").click(function () {
-    $("header").toggleClass("active-menu");
-  });
+  const hamburger = document.querySelector(".hamburger");
+  const header = document.querySelector("header");
 
+  if (hamburger && header) {
+    hamburger.addEventListener("click", function () {
+      header.classList.toggle("active-menu");
+    });
+  }
+  // Tooltip
+  const tooltips = document.querySelectorAll(".tooltip");
 
-  $('select').change(function () {
-      var selectedValue = $(this).val();
-      var emptyOption = $('.empty-option');
-      if (selectedValue === '') {
-        emptyOption.hide();
+  tooltips.forEach(function (tooltip) {
+    tooltip.addEventListener("mouseover", function () {
+      const tooltipContent = tooltip.querySelector(".tooltip-content");
+      if (tooltipContent) {
+        tooltipContent.style.display = "block";
       }
+    });
+
+    tooltip.addEventListener("mouseout", function () {
+      const tooltipContent = tooltip.querySelector(".tooltip-content");
+      if (tooltipContent) {
+        tooltipContent.style.display = "none";
+      }
+    });
   });
-
-
 });
 
+// Form Label
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Form Item Click
+  const formItems = document.querySelectorAll(".form-item");
+  formItems.forEach(function (formItem) {
+    formItem.addEventListener("click", function () {
+      formItem.classList.add("active");
+    });
+  });
+
+  // Form Input Blur
+  const formInputs = document.querySelectorAll(".form_input");
+  formInputs.forEach(function (formInput) {
+    formInput.addEventListener("blur", function () {
+      if (formInput.value === "") {
+        const parentFormItem = formInput.closest(".form-item");
+        if (parentFormItem) {
+          parentFormItem.classList.remove("active");
+        }
+      }
+    });
+  });
+});
